@@ -14,7 +14,7 @@ import java.io.IOException;
  * @desp
  */
 
-@WebServlet(urlPatterns = "/my/servlet")
+@WebServlet(urlPatterns = "/my/servlet", asyncSupported = true)
 public class MyServlet extends HttpServlet {
 
     @Override
@@ -27,9 +27,14 @@ public class MyServlet extends HttpServlet {
         asyncContext.start(() -> {
             try {
                 resp.getWriter().println("Hello World");
+
+                //触发完成
+                asyncContext.complete();
             } catch (IOException e) {
                 e.printStackTrace();
             }
         });
+
+
     }
 }
